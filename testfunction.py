@@ -28,5 +28,11 @@ def r_p_s(player):
         return print ("Congrats! You win.", player, "shreds", computer,".")
     else:
         return print ("That is not a valid choice, please check your spelling!")
-player = input("Please enter Rock, Paper, or Scissors: ")
-r_p_s(player)
+
+play = input("Would you like to play Rock, Paper, Scissors?: ")
+while play == "Yes":
+    player = input("Please enter Rock, Paper, or Scissors: ")
+    r_p_s(player)
+    play = input("Would you like to play again? ")
+else:
+    print("We hope you change your mind!")
