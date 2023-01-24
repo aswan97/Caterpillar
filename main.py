@@ -72,7 +72,7 @@ def r_p_s(player):
     #r_p_s(player)
     #play = input("Would you like to play again? ")
 #else:
-    print("We hope you change your mind!")
+    #print("We hope you change your mind!")
 
 
 if _name_ == "_main_":
