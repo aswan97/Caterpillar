@@ -1,81 +1,97 @@
-from flask import flask
+from flask import Flask
 from flask import request
-from random import randint
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 @app.route("/")
 def index():
-  play = request.args.get("play", "")
-  if play == "Yes":
-    player = request.args.get("player", "")
-    while play == "Yes":
-      r_p_s(player)
-      play = request.args.get("play", "")
-    else:
-      print("We hope you change your mind!")
+  celsius = request.args.get("celsius", "")
+  month = request.args.get("month", "")
+  if celsius and month:
+    fahrenheit = fahrenheit_from(celsius)
+    name_of_month = get_month(month)
+    advice = is_it_warm(fahrenheit)
   else:
-    result = ""
+    fahrenheit = ""
+    name_of_month = ""
   return (
-    """<form action="" method="get">
-              <input type="text" name="play">
-              <input type="submit" value="Convert">
-              </form>"""
-      + play
+    """<form action= "" method="get">
+          <h1> Hope you are having a great day! </h1>
+          Celsius Temperature: <input type="text" name="celsius"><br></br>
+          Please enter the month in number form (1:12): <input type="text" name="month"><br></br>
+          <input type="submit" value="Submit">
+        </form> """
+      + "The temperature is "
+      + fahrenheit 
+      + " F "
+      + " in the month of "
+      + name_of_month
+      + "!"
+      + "<br></br>"
+      + advice
   )
-  return (
-    """<form action="" method="get">
-              <input type="text" name="play">
-              <input type="submit" value="Convert">
-              </form>"""
-      + result
-  )
-    
-@app.route("/<str:player>")
-def r_p_s(player):
-    """create a list of play options"""
-    t = ["Rock", "Paper", "Scissors"]
-    """assign a random play to the computer"""
-    computer = t[randint(0, 2)]
-    """player = input("Rock", "Paper", "Scissors?")"""
-    if player == computer:
-      result = print("Tie!")
-      return result
-    elif player == "Rock":
-      if computer == "Paper":
-        result = print ("The machines win this round", player, "gets covered by", computer,".")
-        return result
-      else:
-        result = print ("You win!", player, "decimates", computer,".")
-        return result
-    elif player == "Paper":
-      if computer == "Scissors":
-        result = print ("You lose, shame on you.", player, "is shredded by", computer,".")
-        return result
-      else:
-        result =  print ("Congrats! You win.", player, "covers", computer,".")
-        return result
-    elif player == "Scissors":
-      if computer == "Rock":
-        result = print ("You lose, shame on you.", player, "gets beaten down by", computer,".")
-        return result
-      else:
-        result = print ("Congrats! You win.", player, "shreds", computer,".")
-        return result
+
+def fahrenheit_from(celsius):
+  """Convert Celsius to Fahrenheit"""
+  try:
+    fahrenheit = float(celsius) * 9 / 5 + 32
+    fahrenheit = round(fahrenheit, 3)
+    return str(fahrenheit)
+  except ValueError:
+    return "Invalid Input"
+
+def get_month(month):
+  """Translate the Number of the Month to the Actual Month"""
+  try:
+    month = int(month)
+    if month == 1:
+      name_of_month = "January"
+      return name_of_month
+    elif month == 2:
+      name_of_month = "February"
+      return name_of_month
+    elif month == 3:
+      name_of_month = "March"
+      return name_of_month
+    elif month == 4:
+      name_of_month = "April"
+      return name_of_month
+    elif month == 5:
+      name_of_month = "May"
+      return name_of_month
+    elif month == 6:
+      name_of_month = "June"
+      return name_of_month
+    elif month == 7:
+      name_of_month = "July"
+      return name_of_month
+    elif month == 8:
+      name_of_month = "August"
+      return name_of_month
+    elif month == 9:
+      name_of_month = "September"
+      return name_of_month
+    elif month == 10:
+      name_of_month = "October"
+      return name_of_month
+    elif month == 11:
+      name_of_month = "November"
+      return name_of_month
+    elif month == 12:
+      name_of_month = "December"
+      return name_of_month 
     else:
-        result = print ("That is not a valid choice, please check your spelling!")
-        return result
+      return "That is not one of the 12 months!"
+  except ValueError:
+    return "Invalid Input"
 
-#play = input("Would you like to play Rock, Paper, Scissors?: ")
-#while play == "Yes":
-    #player = input("Please enter Rock, Paper, or Scissors: ")
-    #r_p_s(player)
-    #play = input("Would you like to play again? ")
-#else:
-    #print("We hope you change your mind!")
+def is_it_warm(fahrenheit):
+  fahrenheit = float(fahrenheit)
+  if fahrenheit > 50.0:
+      advice = "It's decently warm out there, a coat is not needed!"
+  else:
+      advice = "Better bundle up!"
+  return str(advice)
 
-
-if _name_ == "_main_":
-  app.run(host = "127.0.0.1", port = 8080, debug = True)
-  
-           
+if __name__ == "__main__":
+  app.run(host="127.0.0.1", port = 8080, debug = True)
