@@ -14,6 +14,7 @@ def index():
   else:
     fahrenheit = ""
     name_of_month = ""
+    advice = ""
   return (
     """<form action= "" method="get">
           <h1> Hope you are having a great day! </h1>
